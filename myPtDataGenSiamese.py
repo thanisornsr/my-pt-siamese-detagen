@@ -191,7 +191,7 @@ class Pt_datagen_siamese:
 			for i in range(len_imgs_in_vid-1):
 				idA = i_ids[i]
 				idB = i_ids[i+1]
-				if idA in self.unique_id and idB in self.unique_id:
+				if idA not in temp_id_to_bbox_dict or idB not in temp_id_to_bbox_dict:
 					continue
 				bboxesA = temp_id_to_bbox_dict[idA]
 				bboxesB = temp_id_to_bbox_dict[idB]
