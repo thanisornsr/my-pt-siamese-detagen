@@ -120,7 +120,7 @@ class Pt_datagen_siamese:
 		# self.id_to_kpv = temp_id_to_kpv
 
 	def scale_43(self,bboxes,img_w,img_h):
-
+		out_bboxes = []
 		for i in range(len(bboxes)):
 			i_bbox = bboxes[i]
 			print(i_bbox)
