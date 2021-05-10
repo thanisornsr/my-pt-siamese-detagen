@@ -190,16 +190,18 @@ class Pt_datagen_siamese:
 				idB = i_ids[i+1]
 				bboxesA = temp_id_to_bbox_dict[idA]
 				bboxesB = temp_id_to_bbox_dict[idB]
+				bboxesA = self.scale_43(bboxesA,img_w,img_h)
+				bboxesB = self.scale_43(bboxesB,img_w,img_h)
 				tracksA = temp_id_to_track_id[idA]
 				tracksB = temp_id_to_track_id[idB]
 				for iA in range(len(tracksA)):
 					bboxA  = bboxesA[iA]
 					trackA = tracksA[iA]
-					bboxA = self.scale_43(bboxA,img_w,img_h)
+					
 					for iB in range(len(tracksB)):
 						bboxB = bboxesB[iB]
 						trackB = tracksB[iB]
-						bboxB = self.scale_43(bboxB,img_w,img_h)
+						
 
 						temp_imgA_id.append(idA)
 						temp_imgB_id.append(idB)
