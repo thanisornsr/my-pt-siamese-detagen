@@ -124,11 +124,11 @@ class Pt_datagen_siamese:
 		for i in range(len(bboxes)):
 			i_bbox = bboxes[i]
 			# print(i_bbox)
-			bbox_x, bbox_y,bbox_x2,bbox_y2 = i_bbox
+			bbox_x, bbox_y,bbox_w,bbox_h = i_bbox
 			# bbox_x2 = bbox_x+bbox_w
 			# bbox_y2 = bbox_y+bbox_h
-			bbox_w = bbox_x2-bbox_x
-			bbox_h = bbox_y2-bbox_y
+			# bbox_w = bbox_x2-bbox_x
+			# bbox_h = bbox_y2-bbox_y
 			# print('Before: {}, {}, {}, {}'.format(bbox_x,bbox_y,bbox_w,bbox_h))
 			to_check = 0.75*bbox_h
 			if to_check >= bbox_w:
