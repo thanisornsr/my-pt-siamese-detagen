@@ -42,7 +42,7 @@ class Pt_datagen_siamese:
 
 		self.get_data_from_dir()
 		self.get_pair()
-		# self.start_idx, self.end_idx, self.n_batchs = self.get_start_end_idx()
+		self.start_idx, self.end_idx, self.n_batchs = self.get_start_end_idx()
 		# self.split_kp_and_v()
 
 		# self.limb_list = [(0,1),(2,0),(0,3),(0,4),(3,5),(4,6),(5,7),(6,8),(4,3),(3,9),(4,10),(10,9),(9,11),(10,12),(11,13),(12,14)]
@@ -231,6 +231,68 @@ class Pt_datagen_siamese:
 		temp_n_batchs = len(temp_start_idx)
 
 		return temp_start_idx, temp_end_idx, temp_n_batchs
+
+	def gen_batch(self,batch_order):
+		batch_imgsA = []
+		batch_imgsB = []
+		batch_y = []
+
+		temp_input_shape = self.input_shape
+
+		b_start = self.start_idx[batch_order]
+		b_end = self.end_idx[batch_order]
+		temp_imgsA = self.imgA_id
+		temp_imgsA_bbox = self.imgA_bbox
+		temp_imgsB = self.imgB_id
+		temp_imgsB_bbox = self.imgB_bbox
+		temp_y = self.labels
+
+		temp_dict = self.id_to_file_dict
+
+		for i in range(b_start,b_end):
+
+			#imgA
+			img_id = temp_imgsA[i]
+			i_dir = temp_dict[img_id]
+			i_dir = self.data_dir + i_dir
+			o_img = mpimg.imread(i_dir)
+			if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
+				continue
+			i_bbox = temp_imgsA_bbox[i]
+			o_crop = o_img[int(i_bbox[1]):int(i_bbox[1]+i_bbox[3]),int(i_bbox[0]):int(i_bbox[0]+i_bbox[2]),:]
+			if o_crop.shape[0] == 0 or o_crop.shape[1]  == 0 or o_crop.shape[2] == 0:
+				# print('Detect empty image: '+i_dir)
+				continue
+			o_crop = resize(o_crop,temp_input_shape)
+			o_crop = o_crop.astype('float32')
+			batch_imgsA.append(o_crop)
+			#imgB
+			img_id = temp_imgsB[i]
+			i_dir = temp_dict[img_id]
+			i_dir = self.data_dir + i_dir
+			o_img = mpimg.imread(i_dir)
+			if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
+				continue
+			i_bbox = temp_imgsB_bbox[i]
+			o_crop = o_img[int(i_bbox[1]):int(i_bbox[1]+i_bbox[3]),int(i_bbox[0]):int(i_bbox[0]+i_bbox[2]),:]
+			if o_crop.shape[0] == 0 or o_crop.shape[1]  == 0 or o_crop.shape[2] == 0:
+				# print('Detect empty image: '+i_dir)
+				continue
+			o_crop = resize(o_crop,temp_input_shape)
+			o_crop = o_crop.astype('float32')
+			batch_imgsB.append(o_crop)
+			#y
+			batch_y.append(temp_y[i])
+
+		batch_imgsA = np.array(batch_imgsA)
+		batch_imgsB = np.array(batch_imgsB)
+		batch_y = np.array(batch_y)
+		batch_y = batch_y.astype('float32')
+
+		return batch_imgsA,batch_imgsB,batch_y
+
+
+
 
 	# def get_target_valid_joint(self,input_kav):
 	# 	splited_kps = []
