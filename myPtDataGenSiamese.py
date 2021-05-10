@@ -117,6 +117,7 @@ class Pt_datagen_siamese:
 		self.vid_to_id_dict = temp_vid_to_id_dict
 		self.id_to_track_id = temp_id_to_track_id
 		self.id_to_bbox_dict = temp_id_to_bbox
+		self.unique_id = current_unique_image_id
 		# self.id_to_kpv = temp_id_to_kpv
 
 	def scale_43(self,bboxes,img_w,img_h):
@@ -190,6 +191,8 @@ class Pt_datagen_siamese:
 			for i in range(len_imgs_in_vid-1):
 				idA = i_ids[i]
 				idB = i_ids[i+1]
+				if idA in self.unique_id and idB in self.unique_id:
+					continue
 				bboxesA = temp_id_to_bbox_dict[idA]
 				bboxesB = temp_id_to_bbox_dict[idB]
 				bboxesA = self.scale_43(bboxesA,img_w,img_h)
