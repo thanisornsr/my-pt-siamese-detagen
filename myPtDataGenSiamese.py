@@ -41,7 +41,7 @@ class Pt_datagen_siamese:
 		self.data_for = data_for
 
 		self.get_data_from_dir()
-		# self.get_pair_dict()
+		self.get_pair()
 		# self.start_idx, self.end_idx, self.n_batchs = self.get_start_end_idx()
 		# self.split_kp_and_v()
 
@@ -119,30 +119,103 @@ class Pt_datagen_siamese:
 		self.id_to_bbox_dict = temp_id_to_bbox
 		# self.id_to_kpv = temp_id_to_kpv
 
-	def get_pair_dict(self):
+	def scale_43(bboxes,img_w,img_h):
+
+		for i in range(len(bboxes)):
+			i_bbox = bboxes[i]
+			bbox_x, bbox_y,bbox_w,bbox_h = i_bbox
+			# bbox_x2 = bbox_x+bbox_w
+			# bbox_y2 = bbox_y+bbox_h
+			# bbox_w = bbox_x2-bbox_x
+			# bbox_h = bbox_y2-bbox_y
+			# print('Before: {}, {}, {}, {}'.format(bbox_x,bbox_y,bbox_w,bbox_h))
+			to_check = 0.75*bbox_h
+			if to_check >= bbox_w:
+				add_x = True
+				# print('Add x')
+			else:
+				add_x = False
+				# print('Add y')
+
+
+			if add_x:
+				new_bbox_h = bbox_h
+				new_bbox_w = 0.75*bbox_h
+				diff = new_bbox_w - bbox_w
+				new_bbox_y = bbox_y
+				new_bbox_x = bbox_x - 0.5*diff
+				#check if in image
+				if new_bbox_x < 0:
+					new_bbox_x = 0
+				if new_bbox_x+new_bbox_w >= img_w:
+					new_bbox_x = img_w - new_bbox_w - 1
+			else:
+				new_bbox_w = bbox_w
+				new_bbox_h = 4.0/3.0 * bbox_w
+				diff = new_bbox_h - bbox_h
+				new_bbox_x = bbox_x
+				new_bbox_y = bbox_y - 0.5 * diff
+
+				if new_bbox_y < 0:
+					new_bbox_y = 0
+				if new_bbox_y+new_bbox_h >= img_h:
+					new_bbox_y = img_h - new_bbox_h - 1
+			temp_new_bbox = [new_bbox_x,new_bbox_y,new_bbox_w,new_bbox_h]
+			# print('After: {}, {}, {}, {}'.format(new_bbox_x,new_bbox_y,new_bbox_w,new_bbox_h))
+			out_bboxes.append(temp_new_bbox)
+		return out_bboxes
+
+	def get_pair(self):
 		temp_vid_to_id_dict = self.vid_to_id_dict
+		temp_id_to_track_id = self.id_to_track_id
+		temp_id_to_bbox_dict = self.id_to_bbox_dict
 		# temp_valid_keys = self.id_to_kpv
-		temp_pair_dict = {}
+		temp_imgA_id = []
+		temp_imgB_id = []
+		temp_imgA_bbox = []
+		temp_imgB_boxx = []
+		temp_y = []
 		temp_img_ids = []
-		temp_wh_dict = {}
+
 		for vid,i_ids in temp_vid_to_id_dict.items():
 			len_imgs_in_vid = len(i_ids)
 			temp_first_img = i_ids[0]
 			temp_img = io.imread(self.data_dir + self.id_to_file_dict[temp_first_img])
 			img_h = temp_img.shape[0]
 			img_w = temp_img.shape[1]
-			for i in range(len_imgs_in_vid-1):
-				f_0_id = i_ids[i]
-				f_1_id = i_ids[i+1]
-				if f_0_id in temp_valid_keys and f_1_id in temp_valid_keys:
-					temp_pair_dict[f_0_id] = f_1_id
-					temp_wh_dict[f_0_id] = (img_w,img_h)
-					temp_img_ids.append(f_0_id)
 
-		self.pair_dict = temp_pair_dict
-		self.id_to_wh = temp_wh_dict
-		self.img_ids = temp_img_ids
-		self.n_imgs = len(temp_img_ids)
+			for i in range(len_imgs_in_vid-1):
+				idA = i_ids[i]
+				idB = i_ids[i+1]
+				bboxesA = temp_id_to_bbox_dict[idA]
+				bboxesB = temp_id_to_bbox_dict[idB]
+				tracksA = temp_id_to_track_id[idA]
+				tracksB = temp_id_to_track_id[idB]
+				for iA in range(len(tracksA)):
+					bboxA  = bboxesA[iA]
+					trackA = tracksA[iA]
+					bboxA = scale_43(bboxA,img_w,img_h)
+					for iB in range(len(tracksB)):
+						bboxB = bboxesB[iB]
+						trackB = tracksB[iB]
+						bboxB = scale_43(bboxB,img_w,img_h)
+
+						temp_imgA_id.append(idA)
+						temp_imgB_id.append(idB)
+						temp_imgA_bbox.append(bboxA)
+						temp_imgB_bbox.append(bboxB)
+
+						if trackA == trackB:
+							temp_y.append(1)
+						else:
+							temp_y.append(0)
+
+		self.imgA_id = temp_imgA_id
+		self.imgA_bbox = temp_imgA_bbox
+		self.imgB_id = temp_imgB_id
+		self.imgB_bbox = temp_imgB_bbox
+		self.labels = temp_y
+		self.n_imgs = len(temp_imgA_id)
 
 	def get_start_end_idx(self):
 		max_idx = self.n_imgs
