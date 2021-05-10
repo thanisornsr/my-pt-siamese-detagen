@@ -271,8 +271,8 @@ class Pt_datagen_siamese:
 				# print('Detect empty image: '+i_dir)
 				continue
 			o_crop = resize(o_crop,temp_input_shape)
-			o_crop = o_crop.astype('float32')
-			batch_imgsA.append(o_crop)
+			A_crop = o_crop.astype('float32')
+			
 			#imgB
 			img_id = temp_imgsB[i]
 			i_dir = temp_dict[img_id]
@@ -286,8 +286,9 @@ class Pt_datagen_siamese:
 				# print('Detect empty image: '+i_dir)
 				continue
 			o_crop = resize(o_crop,temp_input_shape)
-			o_crop = o_crop.astype('float32')
-			batch_imgsB.append(o_crop)
+			B_crop = o_crop.astype('float32')
+			batch_imgsA.append(A_crop)
+			batch_imgsB.append(B_crop)
 			#y
 			batch_y.append(temp_y[i])
 
