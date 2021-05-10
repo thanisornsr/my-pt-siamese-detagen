@@ -123,6 +123,7 @@ class Pt_datagen_siamese:
 
 		for i in range(len(bboxes)):
 			i_bbox = bboxes[i]
+			print(i_bbox)
 			bbox_x, bbox_y,bbox_w,bbox_h = i_bbox
 			# bbox_x2 = bbox_x+bbox_w
 			# bbox_y2 = bbox_y+bbox_h
