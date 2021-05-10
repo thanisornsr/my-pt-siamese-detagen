@@ -61,6 +61,7 @@ class Pt_datagen_siamese:
 		temp_vid_to_id_dict = {}
 		temp_id_to_track_id = {}
 		temp_id_to_kpv = {}
+		temp_id_to_bbox = {}
 
 		temp_anno_dir = self.anno_dir + self.data_for + '/'
 		for anno_file in os.listdir(temp_anno_dir):
@@ -91,7 +92,7 @@ class Pt_datagen_siamese:
 						bbox_temp = anno['bbox']
 						if bbox_temp[2] > 0 and bbox_temp[3] > 0:
 							if bbox_temp[0] >= 0 and bbox_temp[1] >= 0:
-								# temp_anno_bbox_list.append(anno['bbox'])
+								temp_anno_bbox_list.append(anno['bbox'])
 								current_track_id.append(anno['track_id'])
 								current_image_id.append(anno['image_id'])
 								# current_kpv.append(anno['keypoints'])
@@ -102,9 +103,11 @@ class Pt_datagen_siamese:
 			for cid in current_unique_image_id:
 				cidx = [ x for x in range(len(current_image_id)) if current_image_id[x] == cid]
 				c_track_id = [current_track_id[x] for x in cidx]
+				c_bbox = [temp_anno_bbox_list[x] for x in cidx]
 				# c_kpv = [current_kpv[x] for x in cidx]
 
 				temp_id_to_track_id[cid] = c_track_id
+				temp_id_to_bbox[cid] = c_bbox
 				# temp_id_to_kpv[cid] = c_kpv
 
 
@@ -113,6 +116,7 @@ class Pt_datagen_siamese:
 		self.id_to_file_dict = temp_id_to_file_dict
 		self.vid_to_id_dict = temp_vid_to_id_dict
 		self.id_to_track_id = temp_id_to_track_id
+		self.id_to_bbox_dict = temp_id_to_bbox
 		# self.id_to_kpv = temp_id_to_kpv
 
 	def get_pair_dict(self):
