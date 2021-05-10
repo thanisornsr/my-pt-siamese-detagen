@@ -174,7 +174,7 @@ class Pt_datagen_siamese:
 		temp_imgA_id = []
 		temp_imgB_id = []
 		temp_imgA_bbox = []
-		temp_imgB_boxx = []
+		temp_imgB_bbox = []
 		temp_y = []
 		temp_img_ids = []
 
