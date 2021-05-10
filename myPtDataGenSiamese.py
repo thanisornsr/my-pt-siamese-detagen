@@ -177,6 +177,8 @@ class Pt_datagen_siamese:
 		temp_imgB_bbox = []
 		temp_y = []
 		temp_img_ids = []
+		# temp_imgA = []
+		# temp_imgB = []
 
 		for vid,i_ids in temp_vid_to_id_dict.items():
 			len_imgs_in_vid = len(i_ids)
@@ -215,7 +217,9 @@ class Pt_datagen_siamese:
 
 		self.imgA_id = temp_imgA_id
 		self.imgA_bbox = temp_imgA_bbox
+		# self.imgA = temp_imgA
 		self.imgB_id = temp_imgB_id
+		# self.imgB = temp_imgB
 		self.imgB_bbox = temp_imgB_bbox
 		self.labels = temp_y
 		self.n_imgs = len(temp_imgA_id)
