@@ -348,7 +348,7 @@ class Pt_datagen_siamese:
 			# if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
 			# 	continue
 			B_bbox = temp_imgsB_bbox[i]
-			B_kp = temp_imgB_kp[i]
+			B_kp = temp_imgsB_kp[i]
 			# o_crop = o_img[int(i_bbox[1]):int(i_bbox[1]+i_bbox[3]),int(i_bbox[0]):int(i_bbox[0]+i_bbox[2]),:]
 			# if o_crop.shape[0] == 0 or o_crop.shape[1]  == 0 or o_crop.shape[2] == 0:
 			# 	# print('Detect empty image: '+i_dir)
