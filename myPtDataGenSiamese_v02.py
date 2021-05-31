@@ -223,6 +223,8 @@ class Pt_datagen_siamese:
 
 						kpA = np.delete(kpA,[1,2],0)
 						kpB = np.delete(kpB,[1,2],0)
+						print(kpA.shape)
+						print(kpB.shape)
 
 						
 						temp_imgA_id.append(idA)
