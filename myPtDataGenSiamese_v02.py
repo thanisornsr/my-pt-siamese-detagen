@@ -97,7 +97,8 @@ class Pt_datagen_siamese:
 								current_image_id.append(anno['image_id'])
 								# temp_anno_kp_list.append(anno['keypoints'])
 								current_kpv.append(anno['keypoints'])
-								print(anno['keypoints'].shape)
+								for kp in current_kpv:
+									print(kp.shape)
 
 				# create dict
 
