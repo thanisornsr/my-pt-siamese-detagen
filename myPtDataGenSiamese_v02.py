@@ -277,13 +277,13 @@ class Pt_datagen_siamese:
 			temp_y = np.array(temp_anno_kp[1::3])
 			temp_valid = np.array(temp_anno_kp[2::3])
 
-			print(len(temp_x))
-			print(len(temp_y))
-			print(len(temp_valid))
+
 			temp_valid = temp_valid > 0
 			temp_valid = temp_valid.astype('float32')
 			temp_target_coord = np.stack([temp_x,temp_y],axis=1)
 			temp_target_coord = temp_target_coord.astype('float32')
+			print(temp_target_coord.shape)
+			print(temp_valid.shape)
 
 			splited_kps.append(temp_target_coord)
 			splited_valids.append(temp_valid)
