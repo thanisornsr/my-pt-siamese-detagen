@@ -82,7 +82,7 @@ class Pt_datagen_siamese:
 			
 			current_track_id = []
 			current_image_id = []
-			# current_kpv = []
+			current_kpv = []
 			for anno in data_annotations:
 				
 				temp_keys = list(anno.keys())
