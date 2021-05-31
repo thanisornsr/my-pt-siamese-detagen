@@ -172,6 +172,7 @@ class Pt_datagen_siamese:
 		temp_vid_to_id_dict = self.vid_to_id_dict
 		temp_id_to_track_id = self.id_to_track_id
 		temp_id_to_bbox_dict = self.id_to_bbox_dict
+		temp_id_to_kpv = self.id_to_kpv
 		# temp_valid_keys = self.id_to_kpv
 		temp_imgA_id = []
 		temp_imgB_id = []
