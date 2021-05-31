@@ -273,10 +273,17 @@ class Pt_datagen_siamese:
 		splited_valids = []
 		for temp_anno_kp in input_kav:
 			# print(len(temp_anno_kp))
-			temp_x = np.array(temp_anno_kp[0::3])
-			temp_y = np.array(temp_anno_kp[1::3])
-			temp_valid = np.array(temp_anno_kp[2::3])
+			t_x = temp_anno_kp[0::3]
+			t_y = temp_anno_kp[1::3]
+			t_v = temp_anno_kp[2::3]
 
+			del t_x[1:3]
+			del t_y[1:3]
+			del t_v[1:3]
+
+			temp_x = np.array(t_x)
+			temp_y = np.array(t_y)
+			temp_valid = np.array(t_v)
 
 			temp_valid = temp_valid > 0
 			temp_valid = temp_valid.astype('float32')
@@ -290,24 +297,24 @@ class Pt_datagen_siamese:
 
 		return splited_kps,splited_valids
 
-	def split_kp_and_v(self):
-		temp_id_to_kp = {}
-		temp_id_to_valid = {}
-		temp_id_to_kpv = self.id_to_kpv
-		for i_id,kpv in temp_id_to_kpv.items():
-			t_ks,t_vs = self.get_target_valid_joint(kpv)
-			for i in range(len(t_ks)):
-				temp_k = t_ks[i]
-				temp_v = t_vs[i]
+	# def split_kp_and_v(self):
+	# 	temp_id_to_kp = {}
+	# 	temp_id_to_valid = {}
+	# 	temp_id_to_kpv = self.id_to_kpv
+	# 	for i_id,kpv in temp_id_to_kpv.items():
+	# 		t_ks,t_vs = self.get_target_valid_joint(kpv)
+	# 		for i in range(len(t_ks)):
+	# 			temp_k = t_ks[i]
+	# 			temp_v = t_vs[i]
 
-				t_ks[i] = np.delete(temp_k,[1,2],0)
-				t_vs[i] = np.delete(temp_v,[1,2])
+	# 			t_ks[i] = np.delete(temp_k,[1,2],0)
+	# 			t_vs[i] = np.delete(temp_v,[1,2])
 
-			temp_id_to_kp[i_id] = t_ks
-			temp_id_to_valid[i_id] = t_vs
+	# 		temp_id_to_kp[i_id] = t_ks
+	# 		temp_id_to_valid[i_id] = t_vs
 
-		self.id_to_kp = temp_id_to_kp
-		self.id_to_valid = temp_id_to_valid
+	# 	self.id_to_kp = temp_id_to_kp
+	# 	self.id_to_valid = temp_id_to_valid
 
 	def gen_batch_kp_bbox(self,batch_order):
 		batch_kp_A = []
@@ -335,7 +342,7 @@ class Pt_datagen_siamese:
 
 		for i in range(b_start,b_end):
 			#imgA
-			img_id = temp_imgsA[i]
+			# img_id = temp_imgsA[i]
 			# i_dir = temp_dict[img_id]
 			# i_dir = self.data_dir + i_dir
 			# o_img = mpimg.imread(i_dir)
@@ -351,7 +358,7 @@ class Pt_datagen_siamese:
 			# A_crop = o_crop.astype('float32')
 			
 			#imgB
-			img_id = temp_imgsB[i]
+			# img_id = temp_imgsB[i]
 			# i_dir = temp_dict[img_id]
 			# i_dir = self.data_dir + i_dir
 			# o_img = mpimg.imread(i_dir)
