@@ -224,8 +224,8 @@ class Pt_datagen_siamese:
 						# print(kpA.shape)
 						# print(kpB.shape)
 
-						kpA = np.delete(kpA,[1,2],0)
-						kpB = np.delete(kpB,[1,2],0)
+						# kpA = np.delete(kpA,[1,2],0)
+						# kpB = np.delete(kpB,[1,2],0)
 						# print(kpA.shape)
 						# print(kpB.shape)
 
