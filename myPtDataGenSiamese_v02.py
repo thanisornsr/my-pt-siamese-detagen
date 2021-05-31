@@ -272,10 +272,14 @@ class Pt_datagen_siamese:
 		splited_kps = []
 		splited_valids = []
 		for temp_anno_kp in input_kav:
-			print(len(temp_anno_kp))
+			# print(len(temp_anno_kp))
 			temp_x = np.array(temp_anno_kp[0::3])
 			temp_y = np.array(temp_anno_kp[1::3])
 			temp_valid = np.array(temp_anno_kp[2::3])
+
+			print(len(temp_x))
+			print(len(temp_y))
+			print(len(temp_valid))
 			temp_valid = temp_valid > 0
 			temp_valid = temp_valid.astype('float32')
 			temp_target_coord = np.stack([temp_x,temp_y],axis=1)
