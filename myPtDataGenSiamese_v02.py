@@ -289,8 +289,8 @@ class Pt_datagen_siamese:
 			temp_valid = temp_valid.astype('float32')
 			temp_target_coord = np.stack([temp_x,temp_y],axis=1)
 			temp_target_coord = temp_target_coord.astype('float32')
-			print(temp_target_coord.shape)
-			print(temp_valid.shape)
+			# print(temp_target_coord.shape)
+			# print(temp_valid.shape)
 
 			splited_kps.append(temp_target_coord)
 			splited_valids.append(temp_valid)
