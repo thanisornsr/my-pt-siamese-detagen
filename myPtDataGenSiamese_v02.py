@@ -220,11 +220,13 @@ class Pt_datagen_siamese:
 						bboxB = bboxesB[iB]
 						trackB = tracksB[iB]
 						kpB = kpsB[iB]
+						print(kpA.shape)
+						print(kpB.shape)
 
 						kpA = np.delete(kpA,[1,2],0)
 						kpB = np.delete(kpB,[1,2],0)
-						print(kpA.shape)
-						print(kpB.shape)
+						# print(kpA.shape)
+						# print(kpB.shape)
 
 						
 						temp_imgA_id.append(idA)
