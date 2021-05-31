@@ -97,6 +97,7 @@ class Pt_datagen_siamese:
 								current_image_id.append(anno['image_id'])
 								# temp_anno_kp_list.append(anno['keypoints'])
 								current_kpv.append(anno['keypoints'])
+								print(anno['keypoints'].shape)
 
 				# create dict
 
@@ -220,8 +221,8 @@ class Pt_datagen_siamese:
 						bboxB = bboxesB[iB]
 						trackB = tracksB[iB]
 						kpB = kpsB[iB]
-						print(kpA.shape)
-						print(kpB.shape)
+						# print(kpA.shape)
+						# print(kpB.shape)
 
 						kpA = np.delete(kpA,[1,2],0)
 						kpB = np.delete(kpB,[1,2],0)
