@@ -317,7 +317,7 @@ class Pt_datagen_siamese:
 
 		temp_imgsB = self.imgB_id
 		temp_imgsB_bbox = self.imgB_bbox
-		temp_imgsB_bbox = self.imgB_kp
+		temp_imgsB_kp = self.imgB_kp
 
 		temp_y = self.labels
 
