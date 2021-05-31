@@ -97,7 +97,7 @@ class Pt_datagen_siamese:
 								current_image_id.append(anno['image_id'])
 								# temp_anno_kp_list.append(anno['keypoints'])
 								current_kpv.append(anno['keypoints'])
-								print(current_kpv)
+								# print(current_kpv)
 
 				# create dict
 
@@ -272,6 +272,7 @@ class Pt_datagen_siamese:
 		splited_kps = []
 		splited_valids = []
 		for temp_anno_kp in input_kav:
+			print(len(temp_anno_kp))
 			temp_x = np.array(temp_anno_kp[0::3])
 			temp_y = np.array(temp_anno_kp[1::3])
 			temp_valid = np.array(temp_anno_kp[2::3])
