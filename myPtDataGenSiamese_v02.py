@@ -322,6 +322,10 @@ class Pt_datagen_siamese:
 		batch_bbox_A = []
 		batch_bbox_B = []
 		batch_y = []
+		batch_img_dir_A = []
+		batch_img_dir_B = []
+
+
 
 		temp_input_shape = self.input_shape
 
@@ -342,9 +346,10 @@ class Pt_datagen_siamese:
 
 		for i in range(b_start,b_end):
 			#imgA
-			# img_id = temp_imgsA[i]
-			# i_dir = temp_dict[img_id]
-			# i_dir = self.data_dir + i_dir
+			img_id = temp_imgsA[i]
+			i_dir = temp_dict[img_id]
+			i_dir = self.data_dir + i_dir
+			batch_img_dir_A.append()
 			# o_img = mpimg.imread(i_dir)
 			# if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
 			# 	continue
@@ -358,9 +363,10 @@ class Pt_datagen_siamese:
 			# A_crop = o_crop.astype('float32')
 			
 			#imgB
-			# img_id = temp_imgsB[i]
-			# i_dir = temp_dict[img_id]
-			# i_dir = self.data_dir + i_dir
+			img_id = temp_imgsB[i]
+			i_dir = temp_dict[img_id]
+			i_dir = self.data_dir + i_dir
+			batch_img_dir_B.append(i_dir)
 			# o_img = mpimg.imread(i_dir)
 			# if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
 			# 	continue
@@ -386,7 +392,7 @@ class Pt_datagen_siamese:
 		batch_y = np.array(batch_y)
 		batch_y = batch_y.astype('float32')
 
-		return batch_bbox_A,batch_bbox_B,batch_kp_A,batch_kp_B,batch_y
+		return batch_bbox_A,batch_bbox_B,batch_kp_A,batch_kp_B,batch_y, batch_img_dir_A, batch_img_dir_B
 
 
 	def gen_batch(self,batch_order):
