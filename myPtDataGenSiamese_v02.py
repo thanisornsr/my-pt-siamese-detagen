@@ -349,7 +349,7 @@ class Pt_datagen_siamese:
 			img_id = temp_imgsA[i]
 			i_dir = temp_dict[img_id]
 			i_dir = self.data_dir + i_dir
-			batch_img_dir_A.append()
+			batch_img_dir_A.append(i_dir)
 			# o_img = mpimg.imread(i_dir)
 			# if o_img.shape[0] == 0 or o_img.shape[1]  == 0 or o_img.ndim < 3:
 			# 	continue
